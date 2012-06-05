@@ -1,5 +1,7 @@
 #include <stdexcept>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <vector>
 #include <queue>
 #include "graph.h"
@@ -8,10 +10,57 @@ using namespace std;
 
 namespace complex_networks {
 
+// wrapper function for opening file for read
+static inline void openFileForRead(ifstream &infile, const string &path)
+{
+	if (infile.is_open()) {
+		infile.close();
+	}
+
+	infile.clear();
+	infile.open(path);
+	if (!infile) {
+		throw runtime_error("open file error");
+	}
+}
+
+// get vertex number from opened file
+static size_t getVertexSizeFromFile(ifstream &infile)
+{
+	unsigned long size = 0;
+	string line;
+	while (getline(infile, line)) {
+		istringstream stream(line);
+		unsigned long startVertex, endVertex;
+		stream >> startVertex >> endVertex;
+		size = max(size, max(startVertex, endVertex));
+	}
+
+	return size + 1;
+}
+
 // constructor for class Graph
 Graph::Graph(const string &path)
 {
-	// TODO: need to be implemented
+	// set vertex size first
+	ifstream infile;
+	openFileForRead(infile, path);
+	setVertexSize(getVertexSizeFromFile(infile));
+	infile.close();
+
+	// read edges
+	openFileForRead(infile, path);
+	string line;
+	while (getline(infile, line)) {
+		istringstream stream(line);
+		unsigned long startVertex, endVertex;
+		stream >> startVertex >> endVertex;
+		Edge edge(startVertex, endVertex);
+		addEdge(edge);
+	}
+	shrinkMemory();
+
+	infile.close();
 }
 
 // add edge to the graph

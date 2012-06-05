@@ -91,14 +91,16 @@ public:
 	~Graph() { }
 	inline Graph& operator=(const Graph &rhs);
 	size_t getVertexSize() const { return links.size(); }
-	inline void setVertexSize(size_t size);
 	size_t getEdgeSize() const { return edges.size(); }
 	const std::vector<std::vector<Vertex>>& getLinks() const { return links; }
 	const std::unordered_set<Edge>& getEdges() const { return edges; }
-	bool addEdge(const Edge &edge);
 	bool isOneComponent() const;
-	inline void shrinkMemory();
 	void print() const;
+
+protected:
+	inline void setVertexSize(size_t size);
+	bool addEdge(const Edge &edge);
+	inline void shrinkMemory();
 
 private:
 	std::vector<std::vector<Vertex>> links;
