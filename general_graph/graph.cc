@@ -56,7 +56,10 @@ Graph::Graph(const string &path)
 		unsigned long startVertex, endVertex;
 		stream >> startVertex >> endVertex;
 		Edge edge(startVertex, endVertex);
-		addEdge(edge);
+		if (!addEdge(edge)) {
+			infile.close();
+			throw runtime_error("add edge to graph failed");
+		}
 	}
 	shrinkMemory();
 
