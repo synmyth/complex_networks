@@ -91,16 +91,16 @@ public:
 		links(rhs.links), vertices(rhs.vertices), edges(rhs.edges) { }
 	~Graph() { }
 	inline Graph& operator=(const Graph &rhs);
-	size_t getVertexSize() { return links.size(); }
+	size_t getVertexSize() const { return links.size(); }
 	inline void setVertexSize(size_t size);
-	size_t getEdgeSize() { return edges.size(); }
-	const std::vector<std::vector<Vertex>>& getLinks() { return links; }
-	const std::unordered_set<Vertex>& getVertices() { return vertices; }
-	const std::unordered_set<Edge>& getEdges() { return edges; }
+	size_t getEdgeSize() const { return edges.size(); }
+	const std::vector<std::vector<Vertex>>& getLinks() const { return links; }
+	const std::unordered_set<Vertex>& getVertices() const { return vertices; }
+	const std::unordered_set<Edge>& getEdges() const { return edges; }
 	bool addEdge(const Edge &edge);
-	bool isOneComponent();
+	bool isOneComponent() const;
 	inline void shrinkMemory();
-	void print();
+	void print() const;
 
 protected:
 	inline bool addVertex(const Vertex &vertex);

@@ -32,7 +32,7 @@ bool Graph::addEdge(const Edge &edge)
 }
 
 // check this graph has only one component
-bool Graph::isOneComponent()
+bool Graph::isOneComponent() const
 {
 	enum Color {
 		WHITE, GRAY, BLACK
@@ -79,7 +79,7 @@ bool Graph::isOneComponent()
 }
 
 // print the graph to stdout
-void Graph::print()
+void Graph::print() const
 {
 	cout << "vertex size " << getVertexSize() << endl;
 	cout << "edge size " << getEdgeSize() << endl;
