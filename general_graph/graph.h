@@ -87,27 +87,21 @@ namespace complex_networks {
 class Graph {
 public:
 	Graph(const std::string &path);
-	Graph(const Graph &rhs):
-		links(rhs.links), vertices(rhs.vertices), edges(rhs.edges) { }
+	Graph(const Graph &rhs): links(rhs.links), edges(rhs.edges) { }
 	~Graph() { }
 	inline Graph& operator=(const Graph &rhs);
 	size_t getVertexSize() const { return links.size(); }
 	inline void setVertexSize(size_t size);
 	size_t getEdgeSize() const { return edges.size(); }
 	const std::vector<std::vector<Vertex>>& getLinks() const { return links; }
-	const std::unordered_set<Vertex>& getVertices() const { return vertices; }
 	const std::unordered_set<Edge>& getEdges() const { return edges; }
 	bool addEdge(const Edge &edge);
 	bool isOneComponent() const;
 	inline void shrinkMemory();
 	void print() const;
 
-protected:
-	inline bool addVertex(const Vertex &vertex);
-
 private:
 	std::vector<std::vector<Vertex>> links;
-	std::unordered_set<Vertex> vertices;
 	std::unordered_set<Edge> edges;
 };
 
@@ -115,7 +109,6 @@ private:
 Graph& Graph::operator=(const Graph &rhs)
 {
 	links = rhs.links;
-	vertices = rhs.vertices;
 	edges = rhs.edges;
 }
 
@@ -135,17 +128,6 @@ void Graph::shrinkMemory()
 	for (auto& it: links) {
 		it.shrink_to_fit();
 	}
-}
-
-// add vertex to the graph
-bool Graph::addVertex(const Vertex &vertex)
-{
-	if (vertex.id >= getVertexSize()) {
-		return false;
-	}
-
-	vertices.insert(vertex);
-	return true;
 }
 
 }

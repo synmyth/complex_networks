@@ -17,13 +17,13 @@ Graph::Graph(const string &path)
 // add edge to the graph
 bool Graph::addEdge(const Edge &edge)
 {
-	if (!addVertex(edge.startVertex) || !addVertex(edge.endVertex)) {
+	auto startId = edge.startVertex.id;
+	auto endId = edge.endVertex.id;
+	if (startId >= getVertexSize() || endId >= getVertexSize()) {
 		return false;
 	}
 
 	// in general, this is an undirected graph
-	auto startId = edge.startVertex.id;
-	auto endId = edge.endVertex.id;
 	links.at(startId).push_back(edge.endVertex);
 	links.at(endId).push_back(edge.startVertex);
 	edges.insert(edge);
